@@ -1,13 +1,13 @@
 <template>
   <div class="bg-light-gray min-h-screen flex justify-center items-center">
-    <ContentSection @scroll="onScroll" :onPageBottom="addPage">
-      <SearchBar />
-        <ProfileCard 
-          v-for="profile in paginatedProfiles"
-          :key="profile.email"
-          class="my-5"
-          :profile="profile"
-        />
+    <ContentSection :on-page-bottom="addPage">
+      <SearchBar :update-search="updateSearch" />
+      <ProfileCard 
+        v-for="profile in getProfilesToShow"
+        :key="profile.email"
+        class="my-5"
+        :profile="profile"
+      />
     </ContentSection>
   </div>
 </template>
@@ -33,16 +33,59 @@ export default {
       return {
         paginatedProfiles: [],
         pages: 1,
+        isSearching: false,
+        searchMode: {
+          searchedProfiles: [],
+          paginatedProfiles: [],
+          pages: 1,
+        },
       };
+    },
+    computed: {
+      getProfilesToShow() {
+        return this.isSearching 
+          ? this.searchMode.paginatedProfiles
+          : this.paginatedProfiles;
+      },
     },
     mounted() {
       this.paginatedProfiles = this.profiles.slice(0, profilesPerPage);
     },
     methods: {
       addPage() {
-        this.pages++;
-        this.paginatedProfiles = this.profiles.slice(0, this.pages * profilesPerPage);
-      }
+        if (this.isSearching) {
+          this.searchMode.pages++;
+          this.searchMode.paginatedProfiles = this.searchMode.searchedProfiles.slice(
+            0, this.searchMode.pages * profilesPerPage
+          )
+        } else {
+          this.pages++;
+          this.paginatedProfiles = this.profiles.slice(0, this.pages * profilesPerPage);
+        }
+      },
+      filterProfiles(query) {
+        return this.profiles
+          .filter(profile => {
+            return (
+              profile.name.toLowerCase().includes(query) ||
+              profile.email.toLowerCase().includes(query) ||
+              profile.title.toLowerCase().includes(query) ||
+              profile.address.toLowerCase().includes(query) ||
+              profile.city.toLowerCase().includes(query)
+            );
+          })
+      },
+      updateSearch(event) {
+        const query = event.target.value;
+        if (query.length > 0) {
+          this.isSearching = true;
+          this.searchMode.searchedProfiles = this.filterProfiles(query);
+          this.searchMode.paginatedProfiles = this.searchMode.searchedProfiles.slice(0, profilesPerPage); 
+        } else {
+          this.isSearching = false;
+          this.paginatedProfiles = this.profiles.slice(0, this.pages * profilesPerPage);
+        }
+      },
     }
 }
 </script>
