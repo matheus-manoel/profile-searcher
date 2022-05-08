@@ -12,6 +12,8 @@ module.exports = {
       colors: {
         'light-gray': '#EEEEEE',
         white: '#FFFFFF',
+        alabaster: '#FAFAFA',
+        'persian-green': '#009688',
       },
       boxShadow: {
         under:
