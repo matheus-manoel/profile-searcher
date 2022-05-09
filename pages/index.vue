@@ -1,7 +1,9 @@
 <template>
   <div class="bg-light-gray min-h-screen flex justify-center items-center">
     <ContentSection :on-page-bottom="addPage">
-      <SearchBar :update-search="updateSearch" />
+      <SearchBar
+        :update-search="updateSearch"
+      />
       <ProfileCard 
         v-for="profile in getProfilesToShow"
         :key="profile.email"
@@ -50,7 +52,13 @@ export default {
       },
     },
     mounted() {
-      this.paginatedProfiles = this.profiles.slice(0, profilesPerPage);
+      if (this.$route.params.searchQuery) {
+        this.searchQuery = this.$route.params.searchQuery;
+        this.searchMode.searchedProfiles = this.filterProfiles(this.searchQuery.toLowerCase());
+        this.searchMode.paginatedProfiles = this.searchMode.searchedProfiles.slice(0, profilesPerPage); 
+      } else {
+        this.paginatedProfiles = this.profiles.slice(0, profilesPerPage);
+      }
     },
     methods: {
       addPage() {
