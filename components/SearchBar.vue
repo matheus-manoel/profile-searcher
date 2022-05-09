@@ -5,18 +5,18 @@
       type="text"
       class="focus:outline-none w-full bg-transparent text-2xl leading-7 opacity-[.75]"
       @input="updateSearch"
-    >
+    />
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'SearchBar',
-    props: {
-      updateSearch: {
-        type: Function,
-        required: true,
-      }
-    }
-  }
+export default {
+  name: 'SearchBar',
+  props: {
+    updateSearch: {
+      type: Function,
+      required: true,
+    },
+  },
+}
 </script>
