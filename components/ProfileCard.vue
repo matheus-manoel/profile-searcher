@@ -4,30 +4,30 @@
     class="flex gap-[1.717rem] bg-alabaster shadow-under h-fit pr-[0.563rem]"
     :class="{ 'border border-[#4765FF]': suitable }"
   >
-    <img class="w-[8.375em]" :src='profile.avatar' alt="avatar">
+    <img class="w-[6rem] md:w-[8.375em]" :src='profile.avatar' alt="avatar">
     <div class="flex flex-col w-full">
-      <div class="pt-[0.625rem] flex w-full justify-between items-center">
+      <div class="pt-[0.625rem] flex flex-col w-full md:flex-row md:justify-between md:items-center">
         <h2
-          class="text-2xl opacity-[.87]"
+          class="text-xl md:text-2xl opacity-[.87]"
           v-html="getAllContentHighlighted.name"
         />
         <p
-          class="self-start opacity-[.54] text-sm leading-4"
+          class="opacity-[.54] leading-4 md:self-start text-xs md:text-sm"
           v-html="getAllContentHighlighted.email"
         />
       </div>
       <p 
-        class="text-sm opacity-[.543846] font-bold"
+        class="text-xs md:text-sm opacity-[.543846] font-bold"
         v-html="getAllContentHighlighted.title" 
       />
       <p
-        class="text-sm opacity-[.543846]"
+        class="text-xs md:text-sm opacity-[.543846]"
         v-html="getAllContentHighlighted.address + ', ' + getAllContentHighlighted.city"
       />
       <hr class="mt-[0.094rem] ml-[-1.717rem] mr-[-0.563rem] border-3 border-black border-solid opacity-[.12]" />
       <div class="h-full w-full flex items-center">
         <a
-          class="py-3 cursor-pointer ml-1.5 text-sm leading-1 text-persian-green font-medium"
+          class="py-3 cursor-pointer ml-1.5 text-xs md:text-sm leading-1 text-persian-green font-medium"
           @click="toggleSuitable"
         >
           {{ getToggleSuitableText }}

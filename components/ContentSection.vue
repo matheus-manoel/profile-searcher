@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white w-[35.25rem] h-[40rem] pt-5 px-3 overflow-y-auto" @scroll="onScroll">
+  <div class="bg-white w-[37rem] h-[40rem] pt-5 px-3 overflow-y-auto" @scroll="onScroll">
     <slot />
   </div>
 </template>
