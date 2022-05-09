@@ -23,3 +23,18 @@
     }
   }
 </script>
+
+<style scoped>
+  ::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  ::-webkit-scrollbar-track {
+    border: 0.5px solid rgba(0, 0, 0, 0.16);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #4D4D4D;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+  }
+</style>
