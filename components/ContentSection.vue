@@ -16,7 +16,7 @@
     },
     methods: {
       onScroll ({ target: { scrollTop, clientHeight, scrollHeight }}) {
-        if (scrollTop + clientHeight >= scrollHeight) {
+        if (scrollTop + clientHeight >= scrollHeight - 50) {
           this.onPageBottom();
         }
       }
