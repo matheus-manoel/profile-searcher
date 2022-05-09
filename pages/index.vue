@@ -7,6 +7,7 @@
         :key="profile.email"
         class="my-5"
         :profile="profile"
+        :search-query="searchQuery"
       />
     </ContentSection>
   </div>
@@ -33,7 +34,7 @@ export default {
       return {
         paginatedProfiles: [],
         pages: 1,
-        isSearching: false,
+        searchQuery: '',
         searchMode: {
           searchedProfiles: [],
           paginatedProfiles: [],
@@ -43,7 +44,7 @@ export default {
     },
     computed: {
       getProfilesToShow() {
-        return this.isSearching 
+        return this.searchQuery.length > 0 
           ? this.searchMode.paginatedProfiles
           : this.paginatedProfiles;
       },
@@ -53,7 +54,7 @@ export default {
     },
     methods: {
       addPage() {
-        if (this.isSearching) {
+        if (this.searchQuery.length > 0) {
           this.searchMode.pages++;
           this.searchMode.paginatedProfiles = this.searchMode.searchedProfiles.slice(
             0, this.searchMode.pages * profilesPerPage
@@ -76,13 +77,11 @@ export default {
           })
       },
       updateSearch(event) {
-        const query = event.target.value;
-        if (query.length > 0) {
-          this.isSearching = true;
-          this.searchMode.searchedProfiles = this.filterProfiles(query);
+        this.searchQuery = event.target.value;
+        if (this.searchQuery.length > 0) {
+          this.searchMode.searchedProfiles = this.filterProfiles(this.searchQuery.toLowerCase());
           this.searchMode.paginatedProfiles = this.searchMode.searchedProfiles.slice(0, profilesPerPage); 
         } else {
-          this.isSearching = false;
           this.paginatedProfiles = this.profiles.slice(0, this.pages * profilesPerPage);
         }
       },
