@@ -1,6 +1,9 @@
 /* eslint-disable vue/no-v-html */
 <template>
-  <div class="flex gap-[1.717rem] bg-alabaster shadow-under h-fit pr-[0.563rem]">
+  <div 
+    class="flex gap-[1.717rem] bg-alabaster shadow-under h-fit pr-[0.563rem]"
+    :class="{ 'border border-[#4765FF]': suitable }"
+  >
     <img class="w-[8.375em]" :src='profile.avatar' alt="avatar">
     <div class="flex flex-col w-full">
       <div class="pt-[0.625rem] flex w-full justify-between items-center">
@@ -24,10 +27,10 @@
       <hr class="mt-[0.094rem] ml-[-1.717rem] mr-[-0.563rem] border-3 border-black border-solid opacity-[.12]" />
       <div class="h-full w-full flex items-center">
         <a
-          class="py-3 ml-1.5 text-sm leading-1 text-persian-green font-medium"
-          @click="markAsSuitable"
+          class="py-3 cursor-pointer ml-1.5 text-sm leading-1 text-persian-green font-medium"
+          @click="toggleSuitable"
         >
-          MARK AS SUITABLE
+          {{ getToggleSuitableText }}
         </a>
       </div>
     </div>
@@ -64,6 +67,9 @@
         }
         return highlitedContent;
       },
+      getToggleSuitableText() {
+        return this.suitable ? 'SKIP SELECTION' : 'MARK AS SUITABLE';
+      }
     },
     methods: {
       getFieldContentHighlighted(originalContent, startingHighlightIndex) {
@@ -76,7 +82,10 @@
             + '</span>' + originalContent.substring(startingHighlightIndex + this.searchQuery.length)
         }
         return originalContent;
-      }
+      },
+      toggleSuitable(event) {
+        this.suitable = !this.suitable;
+      },
     }
   }
 </script>
