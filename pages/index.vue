@@ -2,6 +2,7 @@
   <div class="bg-light-gray min-h-screen flex justify-center items-center">
     <ContentSection :on-page-bottom="addPage">
       <SearchBar :update-search="updateSearch" />
+      <p v-if="error">error fetching profiles</p>
       <ProfileCard
         v-for="profile in getProfilesToShow"
         :key="profile.email"
@@ -24,11 +25,21 @@ export default {
   name: 'IndexPage',
   components: { ContentSection, SearchBar, ProfileCard },
   async asyncData() {
-    const response = await fetch(
-      'https://gist.githubusercontent.com/allaud/093aa499998b7843bb10b44ea6ea02dc/raw/c400744999bf4b308f67807729a6635ced0c8644/users.json'
-    )
-    const profiles = await response.json()
-    return { profiles }
+    try {
+      const response = await fetch(
+          'https://gist.githubusercontent.com/allaud/093aa499998b7843bb10b44ea6ea02dc/raw/c400744999bf4b308f67807729a6635ced0c8644/users.json'
+      )
+      if (response.status !== 200) {
+        return {
+          profiles: [],
+          error: `Failed to fetch data: ${response.status}`,
+        }
+      }
+      const profiles = await response.json()
+      return { profiles, error: null }
+    } catch (error) {
+      return { error, profiles: [] }
+    }
   },
   data() {
     return {
