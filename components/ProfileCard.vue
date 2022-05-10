@@ -1,6 +1,7 @@
 <template>
   <div
     class="flex gap-[1.717rem] bg-alabaster shadow-under h-fit pr-[0.563rem]"
+    data-testid="profile-card"
     :class="{ 'border border-[#4765FF]': suitable }"
   >
     <img class="w-[6rem] md:w-[8.375em]" :src="profile.avatar" alt="avatar" />
@@ -10,19 +11,23 @@
       >
         <h2
           class="text-xl md:text-2xl opacity-[.87]"
+          data-testid="profile-name"
           v-html="getAllContentHighlighted.name"
         />
         <p
           class="opacity-[.54] leading-4 md:self-start text-xs md:text-sm"
+          data-testid="profile-email"
           v-html="getAllContentHighlighted.email"
         />
       </div>
       <p
         class="text-xs md:text-sm opacity-[.543846] font-bold"
+        data-testid="profile-title"
         v-html="getAllContentHighlighted.title"
       />
       <p
         class="text-xs md:text-sm opacity-[.543846]"
+        data-testid="profile-address-city"
         v-html="
           getAllContentHighlighted.address +
           ', ' +
@@ -85,7 +90,7 @@ export default {
       const endingHighlightIndex =
         startingHighlightIndex + this.searchQuery.length
       const didMatch = startingHighlightIndex !== -1
-      if (didMatch) {
+      if (didMatch && this.searchQuery.length > 0) {
         return (
           originalContent.substring(0, startingHighlightIndex) +
           '<span class="bg-yellow-200">' +
